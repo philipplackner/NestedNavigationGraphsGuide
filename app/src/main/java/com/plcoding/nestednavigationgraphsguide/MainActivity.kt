@@ -3,6 +3,7 @@ package com.plcoding.nestednavigationgraphsguide
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NestedNavigationGraphsGuideTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "home") {
+                NavHost(navController = navController, startDestination = "auth") {
                     composable("about") {
 
                     }
@@ -39,21 +40,75 @@ class MainActivity : ComponentActivity() {
                         composable("login") {
                             val viewModel = it.sharedViewModel<SampleViewModel>(navController)
 
-                            Button(onClick = {
-                                navController.navigate("calendar") {
-                                    popUpTo("auth") {
-                                        inclusive = true
-                                    }
-                                }
-                            }) {
+                            Column {
+                                Text(text = "Login")
 
+                                Button(onClick = {
+                                    navController.navigate("calendar") {
+                                        popUpTo("auth") {
+                                            inclusive = true
+                                        }
+                                    }
+                                }) {
+                                    Text(text = "Login")
+                                }
+
+                                Button(onClick = {
+                                    navController.navigate("register") {}
+                                }) {
+                                    Text(text = "Go to Register")
+                                }
+
+                                Button(onClick = {
+                                    navController.navigate("forgot_password") {}
+                                }) {
+                                    Text(text = "Go to Forgot Password")
+                                }
                             }
                         }
                         composable("register") {
                             val viewModel = it.sharedViewModel<SampleViewModel>(navController)
+
+                            Column {
+                                Text(text = "Register")
+
+                                Button(onClick = {
+                                    navController.navigate("login") {}
+                                }) {
+                                    Text(text = "Register") // simulate register then return to login
+                                }
+
+                                Button(onClick = {
+                                    navController.navigate("login") {}
+                                }) {
+                                    Text(text = "Go To login")
+                                }
+
+                                Button(onClick = {
+                                    navController.navigate("forgot_password") {}
+                                }) {
+                                    Text(text = "Go To Forgot Password")
+                                }
+                            }
                         }
                         composable("forgot_password") {
                             val viewModel = it.sharedViewModel<SampleViewModel>(navController)
+
+                            Column {
+                                Text(text = "Forgot Password")
+
+                                Button(onClick = {
+                                    navController.navigate("login") {}
+                                }) {
+                                    Text(text = "Email Password") // simulate email password then return to login
+                                }
+
+                                Button(onClick = {
+                                    navController.navigate("login") {}
+                                }) {
+                                    Text(text = "Go To Login")
+                                }
+                            }
                         }
                     }
                     navigation(
@@ -62,8 +117,42 @@ class MainActivity : ComponentActivity() {
                     ) {
                         composable("calendar_overview") {
 
+                            Column {
+                                Text(text = "Calendar Overview")
+
+                                Button(onClick = {
+                                    navController.navigate("calendar_entry") {}
+                                }) {
+                                    Text(text = "Go to Calendar Entry")
+                                }
+
+                                Button(onClick = {
+                                    navController.navigate("login") {
+                                        popUpTo("auth") {
+                                            inclusive = true
+                                        }
+                                    }
+                                }) {
+                                    Text(text = "Go to Logout")
+                                }
+                            }
+
                         }
                         composable("calendar_entry") {
+
+                            Column {
+                                Text(text = "Calendar Entry")
+
+                                Button(onClick = {
+                                    navController.navigate("calendar_overview") {
+                                        popUpTo("calendar") {
+                                            inclusive = true
+                                        }
+                                    }
+                                }) {
+                                    Text(text = "Go to Calendar Overview")
+                                }
+                            }
 
                         }
                     }
