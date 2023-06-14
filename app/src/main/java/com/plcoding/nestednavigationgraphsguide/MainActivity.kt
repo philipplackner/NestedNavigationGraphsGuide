@@ -28,7 +28,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NestedNavigationGraphsGuideTheme {
                 val navController = rememberNavController()
-                NavHost(navController = navController, startDestination = "home") {
+                NavHost(navController = navController, startDestination = "auth") {
                     composable("about") {
 
                     }
